@@ -126,9 +126,9 @@ def process_demo_data_rack(grasp_data, place_data, cfg, gaussian_scale=0.1):
     demo_gripper_pcd_rs.apply_transform(demo_ee_mat)
     demo_gripper_pts_rs = np.asarray(demo_gripper_pcd_rs.vertices) # points we use to represent the gripper at their canonical pose position shown in the demonstration
 
-    # demo_gripper_pts = data['gripper_pts_gaussian'] * gaussian_scale # query points for the gripper (Gaussian distributed)
-    demo_gripper_pts = data['gripper_pts_uniform'] # query points for the gripper (Uniform distributed)
-    demo_gripper_pcd = trimesh.PointCloud(demo_gripper_pts)
+    # demo_gripper_pts_canon = data['gripper_pts_gaussian'] * gaussian_scale # query points for the gripper (Gaussian distributed)
+    demo_gripper_pts_canon = data['gripper_pts_uniform'] # query points for the gripper (Uniform distributed)
+    demo_gripper_pcd = trimesh.PointCloud(demo_gripper_pts_canon)
     demo_ee_mat = util.matrix_from_pose(util.list2pose_stamped(data['ee_pose_world']))  # end-effector pose before grasping
     demo_gripper_pcd.apply_transform(demo_ee_mat)
     demo_gripper_pts = np.asarray(demo_gripper_pcd.vertices) # points we use to represent the gripper at their canonical pose position shown in the demonstration
@@ -175,6 +175,7 @@ def process_demo_data_rack(grasp_data, place_data, cfg, gaussian_scale=0.1):
     place_demo_rack_pts = uniform_place_demo_rack_pts
 
     target_info = dict(
+        demo_gripper_pts_canon=demo_gripper_pts_canon,
         demo_query_pts=demo_gripper_pts, 
         demo_query_pts_real_shape=demo_gripper_pts_rs,
         demo_obj_pts=demo_obj_pts, 
