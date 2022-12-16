@@ -326,6 +326,7 @@ def main(args, global_dict):
         plt.imshow(canvas)
         plt.savefig("figure.png")
 
+    optimizer_gripper_pts = query_pts.detach().cpu().numpy()
     # XXX: END OF MY CODE
 
     place_optimizer = OccNetOptimizer(
